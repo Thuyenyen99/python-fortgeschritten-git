@@ -1,5 +1,6 @@
 import os
 import numpy as np
+import matplotlib.pyplot as plt
 
 
 # Funktion zum Einlesen der Daten aus einer Textdatei in ein NumPy-Strukturiertes Array
@@ -72,3 +73,66 @@ for filialname, daten in filialen.items():
     print(f"Minimaler Einkauf: {min_einkauf}")
     print(f"Durchschnittseinkauf: {durchschnittseinkauf}")
     print(f"Durchschnittseinkauf pro Stunde: {durchschnittseinkauf_pro_stunde}")
+
+    if filialname == "filiale1":
+        maximaler_einkauf_filiale1 = max_einkauf
+        minimaler_einkauf_filiale1 = min_einkauf
+        DurchschnittseinkaufproStunde_filiale1 = [
+            datensatz[1] for datensatz in durchschnittseinkauf_pro_stunde
+        ]
+
+    else:
+        maximaler_einkauf_filiale2 = max_einkauf
+        minimaler_einkauf_filiale2 = min_einkauf
+        DurchschnittseinkaufproStunde_filiale2 = [
+            datensatz[1] for datensatz in durchschnittseinkauf_pro_stunde
+        ]
+
+maxeinkauf = [maximaler_einkauf_filiale1, maximaler_einkauf_filiale2]
+mineinkauf = [minimaler_einkauf_filiale1, minimaler_einkauf_filiale2]
+
+
+x_pos = np.arange(len(filialen))
+bar_width = 0.9
+plt.subplot(2, 2, 1)
+plt.bar(x_pos, maxeinkauf, color="blue")
+plt.xticks(x_pos, filialen)
+plt.yticks()
+plt.xlabel("Filialen")
+plt.ylabel("Maximaler Einkauf")
+plt.title("Maximaler Einkauf pro Filiale")
+
+x_pos2 = np.arange(len(filialen))
+bar_width = 0.9
+plt.subplot(2, 2, 2)
+plt.bar(x_pos2, mineinkauf, color="red")
+plt.xticks(x_pos, filialen)
+plt.yticks()
+plt.xlabel("Filialen")
+plt.ylabel("Minimaler Einkauf")
+plt.title("Minimaler Einkauf pro Filiale")
+
+print("Hi", DurchschnittseinkaufproStunde_filiale1)
+print("stunden", stunden)
+
+
+bar_width = 0.9
+plt.subplot(2, 2, 3)
+plt.plot(
+    stunden,
+    DurchschnittseinkaufproStunde_filiale1,
+    stunden,
+    DurchschnittseinkaufproStunde_filiale1,
+    "oy",
+    stunden,
+    DurchschnittseinkaufproStunde_filiale2,
+    stunden,
+    DurchschnittseinkaufproStunde_filiale2,
+    "or",
+)
+plt.xlabel("Stunde")
+plt.ylabel("Durchschnitts Einkauf pro Stunde")
+plt.title("Durchschnitts Einkauf pro Stunde pro Filiale")
+
+
+plt.show()
